@@ -1,0 +1,13 @@
+<h2>Welcome, {{ user.username }}</h2>
+<h3>Your Devices:</h3>
+<ul>
+  {% for device in devices %}
+    <li>{{ device.name }} - {{ device.device_id }} ({{ device.location }})</li>
+  {% empty %}
+    <li>No devices found.</li>
+  {% endfor %}
+</ul>
+<form method="POST" action="{% url 'logout' %}">
+  {% csrf_token %}
+  <button type="submit">Logout</button>
+</form>
