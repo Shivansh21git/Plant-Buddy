@@ -1,0 +1,33 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Krishi Sarthi{% endblock %}</title>
+  <link rel="stylesheet" href="{% static 'core/style.css' %}">
+</head>
+<body>
+  {% include 'core/header.html' %}
+
+ <main class="main-content">
+  {% block content %}
+  <!-- Optional: Default homepage content -->
+  <section class="hero">
+    <div class="container">
+      <h1>Welcome to <span class="brand">Krishi Sarthi</span></h1>
+      <p>Your smart companion for monitoring soil moisture and plant health.</p>
+      {% if not user.is_authenticated %}
+        <a href="{% url 'login' %}" class="btn-primary">Get Started</a>
+      {% else %}
+        <a href="{% url 'dashboard' %}" class="btn-primary">Go to Dashboard</a>
+      {% endif %}
+    </div>
+  </section> 
+  {% endblock %}
+</main>
+
+
+  {% include 'core/footer.html' %}
+</body>
+</html>
