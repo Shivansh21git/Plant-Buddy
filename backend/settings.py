@@ -11,6 +11,9 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 
 from pathlib import Path
+import os
+from dotenv import load_dotenv
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -128,3 +131,16 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_URL = 'login'              # Named URL pattern
 LOGIN_REDIRECT_URL = 'dashboard' # After successful login
 LOGOUT_REDIRECT_URL = '/login/'    # After logout
+
+
+
+
+INFLUX_URL = os.getenv('INFLUXDB_URL')
+INFLUX_TOKEN = os.getenv('INFLUXDB_TOKEN')
+INFLUX_ORG = os.getenv('INFLUXDB_ORG')
+INFLUX_BUCKET = os.getenv('INFLUXDB_BUCKET')
+
+
+MQTT_HOST = os.getenv('MQTT_BROKER')
+MQTT_TOPIC = os.getenv('MQTT_PUB_TOPIC')
+MQTT_PORT  = os.getenv('BROKER_PORT')

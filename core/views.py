@@ -5,6 +5,7 @@ from .forms import UserregistrationForm, DeviceForm
 from .models import Device
 from influxdb_client import InfluxDBClient
 from django.contrib import messages
+from django.conf import settings
 
 def home_view(request):
     return render(request, 'core/base.html')
@@ -44,23 +45,19 @@ def dashboard_view(request):
 @login_required
 def device_data_view(request, device_id):
     # InfluxDB connection settings
-    url = "http://localhost:8086"
-    token = "ll68ar-kpu7RmwjXzlicjaHtx0N6vKFLANGHc-upvXmkIB4h7P9z9AbpljEJhlNBnr781ORNc3PoddTgAqS3EA=="
-    org = "myorg"
-    bucket = "plantbuddy"
 
-    client = InfluxDBClient(url=url, token=token, org=org)
+    client = InfluxDBClient(url=settings.INFLUX_URL, token=settings.INFLUX_TOKEN, org=settings.INFLUX_ORG)
     query_api = client.query_api()
 
     query = f'''
-    from(bucket: "{bucket}")
+    from(bucket: "{settings.INFLUX_BUCKET}")
       |> range(start: -7d)
       |> filter(fn: (r) => r["_measurement"] == "npk_data")
       |> filter(fn: (r) => r["device_id"] == "{device_id}")
       |> last()
     '''
 
-    result = query_api.query(org=org, query=query)
+    result = query_api.query(org=settings.INFLUX_ORG, query=query)
 
     data_points = {}
     for table in result:
