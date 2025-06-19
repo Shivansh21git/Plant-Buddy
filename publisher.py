@@ -3,7 +3,7 @@ import time
 import random
 import json
 import paho.mqtt.client as mqtt
-from django.conf import settings
+# from django.conf import settings
 from dotenv import load_dotenv
 import os
 load_dotenv()

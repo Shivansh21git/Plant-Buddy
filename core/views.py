@@ -6,6 +6,14 @@ from .models import Device
 from influxdb_client import InfluxDBClient
 from django.contrib import messages
 from django.conf import settings
+from dotenv import load_dotenv
+import os
+load_dotenv()
+
+INFLUX_URL = os.getenv('INFLUXDB_URL')
+INFLUX_TOKEN = os.getenv('INFLUXDB_TOKEN')
+INFLUX_ORG = os.getenv('INFLUXDB_ORG')
+INFLUX_BUCKET = os.getenv('INFLUXDB_BUCKET')
 
 def home_view(request):
     return render(request, 'core/base.html')
@@ -46,18 +54,18 @@ def dashboard_view(request):
 def device_data_view(request, device_id):
     # InfluxDB connection settings
 
-    client = InfluxDBClient(url=settings.INFLUX_URL, token=settings.INFLUX_TOKEN, org=settings.INFLUX_ORG)
+    client = InfluxDBClient(url=INFLUX_URL, token=INFLUX_TOKEN, org=INFLUX_ORG)
     query_api = client.query_api()
 
     query = f'''
-    from(bucket: "{settings.INFLUX_BUCKET}")
+    from(bucket: "{INFLUX_BUCKET}")
       |> range(start: -7d)
       |> filter(fn: (r) => r["_measurement"] == "npk_data")
       |> filter(fn: (r) => r["device_id"] == "{device_id}")
       |> last()
     '''
 
-    result = query_api.query(org=settings.INFLUX_ORG, query=query)
+    result = query_api.query(org=INFLUX_ORG, query=query)
 
     data_points = {}
     for table in result:
