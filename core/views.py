@@ -79,6 +79,7 @@ def device_data_view(request, device_id):
         "data_points": data_points
     })
 
+
 # def login_view(request):
 #     if request.method == "POST":
 #         username = request.POST['username']

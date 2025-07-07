@@ -6,6 +6,14 @@
 <div class="container">
   <h2>Welcome, {{ user.username }}</h2>
 
+  <h3>Register a New Krishi Sarthi Device</h3>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit" class="btn-primary">Add Device</button>
+</form>
+
+<hr>
   <h3>Your Devices</h3>
   {% if devices %}
   <table class="device-table">
