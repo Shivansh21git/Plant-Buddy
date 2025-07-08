@@ -59,7 +59,7 @@ def device_data_view(request, device_id):
 
     query = f'''
     from(bucket: "{INFLUX_BUCKET}")
-      |> range(start: -20d)
+      |> range(start: -30d)
       |> filter(fn: (r) => r["_measurement"] == "npk_data")
       |> filter(fn: (r) => r["device_id"] == "{device_id}")
       |> last()
