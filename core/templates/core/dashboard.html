@@ -6,12 +6,15 @@
 <div class="container">
   <h2>Welcome, {{ user.username }}</h2>
 
-  <h3>Register a New Krishi Sarthi Device</h3>
+  {% comment %} <h3>Register a New Krishi Sarthi Device</h3> {% endcomment %}
+<button id="toggleDeviceForm" class="btn-primary">+ Add New Device</button>
+<div id="deviceFormContainer" style="display: none; margin-top: 1rem;">
 <form method="post">
   {% csrf_token %}
   {{ form.as_p }}
   <button type="submit" class="btn-primary">Add Device</button>
 </form>
+</div>
 
 <hr>
   <h3>Your Devices</h3>
@@ -40,4 +43,19 @@
   <p>No devices found. <a href="{% url 'dashboard' %}">Add one now</a>.</p>
   {% endif %}
 </div>
+<script>
+  const toggleBtn = document.getElementById('toggleDeviceForm');
+  const formContainer = document.getElementById('deviceFormContainer');
+
+  toggleBtn.addEventListener('click', () => {
+    if (formContainer.style.display === 'none') {
+      formContainer.style.display = 'block';
+      toggleBtn.textContent = 'Cancel';
+    } else {
+      formContainer.style.display = 'none';
+      toggleBtn.textContent = '+ Add New Device';
+    }
+  });
+</script>
+
 {% endblock %} 
