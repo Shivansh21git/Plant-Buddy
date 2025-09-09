@@ -8,7 +8,7 @@ class Device(models.Model):
     device_id = models.CharField(max_length=100,unique=True)
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=200, blank=True)
-    created_at = models.DateField(auto_now_add=True)
+    created_at = models.DateTimeField(auto_now_add=True)
 
 
     def __self__(self):

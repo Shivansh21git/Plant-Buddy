@@ -40,13 +40,16 @@
     </tbody>
   </table>
   {% else %}
-  <p>No devices found. <a href="{% url 'dashboard' %}">Add one now</a>.</p>
+  <p>No devices found. <a href="#" id="showDeviceForm">Add one now</a>.</p>
   {% endif %}
 </div>
+
+
 <script>
   const toggleBtn = document.getElementById('toggleDeviceForm');
   const formContainer = document.getElementById('deviceFormContainer');
-
+  const showLink = document.getElementById('showDeviceForm');
+if(toggleBtn){
   toggleBtn.addEventListener('click', () => {
     if (formContainer.style.display === 'none') {
       formContainer.style.display = 'block';
@@ -55,7 +58,14 @@
       formContainer.style.display = 'none';
       toggleBtn.textContent = '+ Add New Device';
     }
-  });
+  });}
+if (showLink) {
+  showLink.addEventListener('click', (e) => {
+  e.preventDefault();
+  formContainer.style.display = 'block';
+  if (toggleBtn) toggleBtn.textContent = 'Cancel';
+    });
+  }
 </script>
 
 {% endblock %} 

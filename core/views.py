@@ -3,17 +3,13 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .forms import UserregistrationForm, DeviceForm
 from .models import Device
-from influxdb_client import InfluxDBClient
 from django.contrib import messages
 from django.conf import settings
 from dotenv import load_dotenv
 import os
 load_dotenv()
 
-INFLUX_URL = os.getenv('INFLUXDB_URL')
-INFLUX_TOKEN = os.getenv('INFLUXDB_TOKEN')
-INFLUX_ORG = os.getenv('INFLUXDB_ORG')
-INFLUX_BUCKET = os.getenv('INFLUXDB_BUCKET')
+
 
 def home_view(request):
     return render(request, 'core/base.html')
