@@ -86,7 +86,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #         'HOST': os.getenv('DB_HOST'),
 #         'PORT': os.getenv('DB_PORT'),
 #     }
-}
+# }
 
 DATABASES = {
     'default': dj_database_url.config(
