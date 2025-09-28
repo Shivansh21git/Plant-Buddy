@@ -1,6 +1,6 @@
 from django.urls import path
 from django.contrib.auth import views as auth_views
-from .views import register_view, dashboard_view, home_view, device_data_view
+from .views import register_view, dashboard_view, home_view, device_data_json
 
 urlpatterns = [
     path('', home_view, name='base'),
@@ -8,5 +8,5 @@ urlpatterns = [
     path('login/', auth_views.LoginView.as_view(template_name='core/login.html'), name='login'),
     path('logout/', auth_views.LogoutView.as_view(), name='logout'),
     path('dashboard/', dashboard_view, name='dashboard'),
-    path('device/<str:device_id>/data/', device_data_view, name='device_data'),
+    path('device/<str:device_id>/data-json/', device_data_json, name="device_data_json"),
 ]

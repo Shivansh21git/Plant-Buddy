@@ -5,15 +5,40 @@
 {% block content %}
   <h2>Data for Device: {{ device_id }}</h2>
 
-  {% if data_points %}
-    <table class="device-table">
-      <tr><th>N</th><td>{{ data_points.N }}</td></tr>
-      <tr><th>P</th><td>{{ data_points.P }}</td></tr>
-      <tr><th>K</th><td>{{ data_points.K }}</td></tr>
-    </table>
-  {% else %}
-    <p>No data found for this device.</p>
-  {% endif %}
-   <br>
+  <div id="device-data">
+    <p>Loading latest data...</p>
+  </div>
+
+  <br>
   <a href="{% url 'dashboard' %}" class="btn-primary">Back to Dashboard</a>
+
+  <script>
+    function fetchDeviceData() {
+      fetch("{% url 'device_data_json' device_id %}")
+        .then(response => response.json())
+        .then(data => {
+          if (data.nitrogen !== undefined) {
+            document.getElementById("device-data").innerHTML = `
+              <table class="device-table">
+                <tr><th>N</th><td>${data.nitrogen}</td></tr>
+                <tr><th>P</th><td>${data.phosphorus}</td></tr>
+                <tr><th>K</th><td>${data.potassium}</td></tr>
+                <tr><th>TEMP</th><td>${data.temperature}</td></tr>
+                <tr><th>HUM</th><td>${data.humidity}</td></tr>
+                <tr><th>Last Updated</th><td>${data.timestamp}</td></tr>
+              </table>
+            `;
+          } else {
+            document.getElementById("device-data").innerHTML = "<p>No data found for this device.</p>";
+          }
+        })
+        .catch(error => {
+          console.error("Error fetching data:", error);
+        });
+    }
+
+    // Fetch every 5 seconds
+    setInterval(fetchDeviceData, 5000);
+    fetchDeviceData();
+  </script>
 {% endblock %}

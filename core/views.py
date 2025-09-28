@@ -1,11 +1,12 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.decorators import login_required
 from .forms import UserregistrationForm, DeviceForm
-from .models import Device
+from .models import Device, DeviceData
 from django.contrib import messages
 from django.conf import settings
 from dotenv import load_dotenv
+from django.http import JsonResponse
 import os
 load_dotenv()
 
@@ -47,35 +48,20 @@ def dashboard_view(request):
     })
 
 @login_required
-def device_data_view(request, device_id):
-    # InfluxDB connection settings
+def device_data_json(request, device_id):
+    device = get_object_or_404(Device, device_id=device_id, user=request.user)
+    latest_data = DeviceData.objects.filter(device=device).order_by("-timestamp").first()
 
-    client = InfluxDBClient(url=INFLUX_URL, token=INFLUX_TOKEN, org=INFLUX_ORG)
-    query_api = client.query_api()
-
-    query = f'''
-    from(bucket: "{INFLUX_BUCKET}")
-      |> range(start: -30d)
-      |> filter(fn: (r) => r["_measurement"] == "npk_data")
-      |> filter(fn: (r) => r["device_id"] == "{device_id}")
-      |> last()
-    '''
-
-    result = query_api.query(org=INFLUX_ORG, query=query)
-
-    data_points = {}
-    for table in result:
-        for record in table.records:
-            field_name = record.get_field()
-            value = record.get_value()
-            data_points[field_name] = value
-
-    return render(request, "core/device_data.html", {
-        "device_id": device_id,
-        "data_points": data_points
-    })
-
-
+    if latest_data:
+        return JsonResponse({
+            "nitrogen": latest_data.nitrogen,
+            "phosphorus": latest_data.phosphorus,
+            "potassium": latest_data.potassium,
+            "temperature": latest_data.temperature,
+            "humidity": latest_data.humidity,
+            "timestamp": latest_data.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
+        })
+    return JsonResponse({}, status=404)
 # def login_view(request):
 #     if request.method == "POST":
 #         username = request.POST['username']

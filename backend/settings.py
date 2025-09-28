@@ -140,8 +140,10 @@ LOGOUT_REDIRECT_URL = '/login/'    # After logout
 
 
 
-
-
 MQTT_HOST = os.getenv('MQTT_BROKER')
 MQTT_TOPIC = os.getenv('MQTT_PUB_TOPIC')
 MQTT_PORT  = os.getenv('BROKER_PORT')
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://ar.bhoomitra.space",
+]
