@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    "rest_framework",
     'core',
 ]
 
@@ -145,5 +146,5 @@ MQTT_TOPIC = os.getenv('MQTT_PUB_TOPIC')
 MQTT_PORT  = os.getenv('BROKER_PORT')
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://ar.bhoomitra.space",
+    "https://ar.bhoomitra.space",  "https://dev.bhoomitra.space",
 ]
