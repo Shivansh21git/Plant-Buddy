@@ -57,7 +57,7 @@ def device_data_json(request, device_id):
     latest_data = DeviceData.objects.filter(device=device).order_by("-timestamp").first()
 
     if latest_data:
-        return JsonResponse({
+       return JsonResponse({
             "nitrogen": latest_data.nitrogen,
             "phosphorus": latest_data.phosphorus,
             "potassium": latest_data.potassium,
@@ -65,19 +65,13 @@ def device_data_json(request, device_id):
             "humidity": latest_data.humidity,
             "timestamp": latest_data.timestamp.strftime("%Y-%m-%d %H:%M:%S"),
         })
-    return JsonResponse({}, status=404)
-# def login_view(request):
-#     if request.method == "POST":
-#         username = request.POST['username']
-#         password = request.POST['password']
-#         user = authenticate(request, username=username, password=password)
-#         if user is not None:
-#             login(request, user)
-#             return redirect('dashboard')
-#         else:
-#             messages.error(request, "Invalid credentials")
-#     return render(request, 'core/login.html', {'form': AuthenticationForm()})
+    else:
+        return JsonResponse({"error": "No data found"}, status=404)
 
+@login_required
+def device_data_page(request, device_id):
+    """Renders the HTML page with JS fetch"""
+    return render(request, 'core/device_data.html', {"device_id": device_id})
 
 @api_view(["POST"])
 @permission_classes([])  # AllowAny for now; change to IsAuthenticated later
