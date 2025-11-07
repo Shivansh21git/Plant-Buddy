@@ -16,7 +16,7 @@
   <section class="hero">
     <div class="container">
       <h1>Welcome to <span class="brand">Krishi Sarthi</span></h1>
-      <p>Your smart companion for monitoring soil moisture and plant health.</p>
+      <p>Your smart companion for monitoring soil health and nutrition.</p>
       {% if not user.is_authenticated %}
         <a href="{% url 'login' %}" class="btn-primary">Get Started</a>
       {% else %}
@@ -29,7 +29,13 @@
 
 
   {% include 'core/footer.html' %}
+
+
+{% comment %} {% block extra_scripts %}
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css">
+  <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest"></script>
+{% endblock %} {% endcomment %}
 
 </body>
 </html>
