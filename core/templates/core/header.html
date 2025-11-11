@@ -2,8 +2,8 @@
 <header class="main-header">
   <div class="container">
     <div class="logo">
-      <a href="{% url 'base' %}">🌿 <strong>Krishi Sarthi</strong></a>
-    </div>
+      <a href="{% url 'base' %}">🌿 <strong>Bhoomitra</strong></a>
+    
     <nav class="nav-links">
       {% if user.is_authenticated %}
         {% comment %} <a href="{% url 'dashboard' %}">device</a>{% endcomment %}
@@ -16,5 +16,6 @@
         <a href="{% url 'register' %}">Register</a>
       {% endif %}
     </nav>
+    </div>
   </div>
 </header>

@@ -34,7 +34,7 @@
         <td>{{ device.name }}</td>
         <td>{{ device.device_id }}</td>
         <td>{{ device.location }}</td>
-         <td><a href="{% url 'device_data_page' device.device_id %}" class="btn-primary"><a>View Data</a></td> 
+        <td><a href="{% url 'device_data_page' device.device_id %}" class="btn-primary">View Data</a></td>
       </tr>
       {% endfor %}
     </tbody>
