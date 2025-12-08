@@ -146,5 +146,5 @@ MQTT_HOST = os.getenv('MQTT_BROKER')
 MQTT_TOPIC = os.getenv('MQTT_PUB_TOPIC')
 MQTT_PORT  = os.getenv('BROKER_PORT')
 
-CSRF_TRUSTED_ORIGINS = [
-os.getenv('CRF_Tokken')]
+CSRF_TRUSTED_ORIGINS = [ "http://plant-buddy-production.up.railway.app", "https://plant-buddy-production.up.railway.app"
+]
