@@ -28,7 +28,7 @@ SECRET_KEY = 'django-insecure-x-jcs!gm%rwsp4o75hba)-(4!8dlmo6br41lc3842&-11pus4(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [os.getenv('DJANGO_ALLOWED_HOSTS')]
 
 
 # Application definition
@@ -147,5 +147,4 @@ MQTT_TOPIC = os.getenv('MQTT_PUB_TOPIC')
 MQTT_PORT  = os.getenv('BROKER_PORT')
 
 CSRF_TRUSTED_ORIGINS = [
-    "https://ar.bhoomitra.space",  "https://dev.bhoomitra.space",
-]
+os.getenv('CRF_Tokken')]
